@@ -6,26 +6,8 @@ import java.util.*;
 
 public class examenTest {
     
-    public examenTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-    @Test
+ 
+    @Test(timeout=1000)
     public void testEnterosEnAmbos() {
         Set<Integer> s1 = new HashSet<>();
         Set<Integer> s2 = new HashSet<>();
@@ -39,7 +21,7 @@ public class examenTest {
         assertEquals("Los sets de parametro no deben verse alterados", 7, s2.size());
     }
 
-    @Test
+    @Test(timeout=1000)
     public void testExpulsar() {
         Alumno a1 = new Alumno(1, new Double[]{1.0, 2.0, 7.0, 6.4, 9.2, 2.20, 7.8});// expulsado;
         Alumno a2 = new Alumno(2, new Double[]{7.8, 7.8, 7.8, 7.8, 7.8});// expulsado;
@@ -57,18 +39,18 @@ public class examenTest {
         assertEquals(true, alumnos.contains(a4));
     }
 
-    @Test
+    @Test(timeout=1000)
     public void testObtenerNota() {
         List<Integer> notasJueces = new ArrayList<>(Arrays.asList(8, 4, 2, 6, 2, 9, 7));
         double expResult = 5.4;
         double result = examen.obtenerNota(notasJueces);
         assertEquals(expResult, result, 0.01);
-        notasJueces = new ArrayList<>(Arrays.asList(8, 4, 2, 2, 9, 9, 7, 5, 10));
-        expResult = 6.285;
+        assertEquals("El parametro no debe verse alterado", 7, notasJueces.size());
+        notasJueces = new ArrayList<>(Arrays.asList(8, 4, 2, 2, 9, 7, 5, 10));
+        expResult = 5.833;
         result = examen.obtenerNota(notasJueces);
         assertEquals(expResult, result, 0.01);
         notasJueces = new ArrayList<>(Arrays.asList(8, 4, 2, 2, 9));
-        expResult = 6.285;
         boolean hayExcepcion = false;
         try {
             result = examen.obtenerNota(notasJueces);
