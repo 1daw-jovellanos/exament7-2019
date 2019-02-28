@@ -1,0 +1,82 @@
+package examen;
+
+import org.junit.*;
+import static org.junit.Assert.*;
+import java.util.*;
+
+public class examenTest {
+    
+    public examenTest() {
+    }
+    
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    
+    @Before
+    public void setUp() {
+    }
+    
+    @After
+    public void tearDown() {
+    }
+
+    @Test
+    public void testEnterosEnAmbos() {
+        Set<Integer> s1 = new HashSet<>();
+        Set<Integer> s2 = new HashSet<>();
+        Collections.addAll(s1, 4, 3, 2, -5, 6, -9, 5, 1);
+        Collections.addAll(s2, 2, 5, 3, -9, 7, 8, -24);
+        List<Integer> l = examen.enterosEnAmbos(s1, s2);
+        Integer[] actual = new Integer[l.size()];
+        l.toArray(actual);
+        assertArrayEquals("Resultado no es el esperado", new Integer[]{2,3,5}, actual);
+        assertEquals("Los sets de parametro no deben verse alterados", 8, s1.size());
+        assertEquals("Los sets de parametro no deben verse alterados", 7, s2.size());
+    }
+
+    @Test
+    public void testExpulsar() {
+        Alumno a1 = new Alumno(1, new Double[]{1.0, 2.0, 7.0, 6.4, 9.2, 2.20, 7.8});// expulsado;
+        Alumno a2 = new Alumno(2, new Double[]{7.8, 7.8, 7.8, 7.8, 7.8});// expulsado;
+        Alumno a3 = new Alumno(3, new Double[]{7.8, 7.8, 7.8, 7.8, 7.8, 7.8});// mantenido
+        Alumno a4 = new Alumno(4, new Double[]{7.8, 10.0, 9.0, 10.0, 9.0, 10.0});// mantenido
+        Alumno a5 = new Alumno(5, new Double[]{7.8, 10.0, 9.0, 10.0, 9.0, 10.0, 
+                7.8, 10.0, 9.0, 10.0, 9.0, 10.0, 7.8, 10.0, 9.0, 10.0, 9.0, 10.0});// expulsado
+        
+        Set<Alumno> alumnos = new HashSet<>();
+        Collections.addAll(alumnos, a1, a2, a3, a4, a5);
+        int result = examen.expulsar(alumnos);
+        assertEquals(3, result);
+        assertEquals(2, alumnos.size());
+        assertEquals(true, alumnos.contains(a3));
+        assertEquals(true, alumnos.contains(a4));
+    }
+
+    @Test
+    public void testObtenerNota() {
+        List<Integer> notasJueces = new ArrayList<>(Arrays.asList(8, 4, 2, 6, 2, 9, 7));
+        double expResult = 5.4;
+        double result = examen.obtenerNota(notasJueces);
+        assertEquals(expResult, result, 0.01);
+        notasJueces = new ArrayList<>(Arrays.asList(8, 4, 2, 2, 9, 9, 7, 5, 10));
+        expResult = 6.285;
+        result = examen.obtenerNota(notasJueces);
+        assertEquals(expResult, result, 0.01);
+        notasJueces = new ArrayList<>(Arrays.asList(8, 4, 2, 2, 9));
+        expResult = 6.285;
+        boolean hayExcepcion = false;
+        try {
+            result = examen.obtenerNota(notasJueces);
+        } catch (IllegalArgumentException ex) {
+            hayExcepcion = true;
+        }
+        assertEquals(true, hayExcepcion);
+        
+    }
+    
+}
