@@ -4,7 +4,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.*;
 
-public class examenTest {
+public class ExamenT7Test {
     
  
     @Test(timeout=1000)
@@ -13,7 +13,7 @@ public class examenTest {
         Set<Integer> s2 = new HashSet<>();
         Collections.addAll(s1, 4, 3, 2, -5, 6, -9, 5, 1);
         Collections.addAll(s2, 2, 5, 3, -9, 7, 8, -24);
-        List<Integer> l = examen.enterosEnAmbos(s1, s2);
+        List<Integer> l = ExamenT7.enterosEnAmbos(s1, s2);
         Integer[] actual = new Integer[l.size()];
         l.toArray(actual);
         assertArrayEquals("Resultado no es el esperado", new Integer[]{2,3,5}, actual);
@@ -32,7 +32,7 @@ public class examenTest {
         
         Set<Alumno> alumnos = new HashSet<>();
         Collections.addAll(alumnos, a1, a2, a3, a4, a5);
-        int result = examen.expulsar(alumnos);
+        int result = ExamenT7.expulsar(alumnos);
         assertEquals(3, result);
         assertEquals(2, alumnos.size());
         assertEquals(true, alumnos.contains(a3));
@@ -43,17 +43,17 @@ public class examenTest {
     public void testObtenerNota() {
         List<Integer> notasJueces = new ArrayList<>(Arrays.asList(8, 4, 2, 6, 2, 9, 7));
         double expResult = 5.4;
-        double result = examen.obtenerNota(notasJueces);
+        double result = ExamenT7.obtenerNota(notasJueces);
         assertEquals(expResult, result, 0.01);
         assertEquals("El parametro no debe verse alterado", 7, notasJueces.size());
         notasJueces = new ArrayList<>(Arrays.asList(8, 4, 2, 2, 9, 7, 5, 10));
         expResult = 5.833;
-        result = examen.obtenerNota(notasJueces);
+        result = ExamenT7.obtenerNota(notasJueces);
         assertEquals(expResult, result, 0.01);
         notasJueces = new ArrayList<>(Arrays.asList(8, 4, 2, 2, 9));
         boolean hayExcepcion = false;
         try {
-            result = examen.obtenerNota(notasJueces);
+            result = ExamenT7.obtenerNota(notasJueces);
         } catch (IllegalArgumentException ex) {
             hayExcepcion = true;
         }
